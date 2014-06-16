@@ -5,7 +5,7 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-    config.vm.box = "opentable/win-2012r2-standard-amd64-nocm"
+    config.vm.box = "win_2012r2" #vag"opentable/win-2012r2-standard-amd64-nocm"
 
     config.vm.provider :vmware_fusion do |v, override|
           v.gui = true
@@ -35,6 +35,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.provision "shell" do|s|
       s.path = "./scripts/install_rabbitmq3.ps1"
       s.upload_path = "c:/windows/temp/install_rabbitmq3.ps1"
+      s.privileged = true
+    end
+
+    config.vm.provision "shell" do|s|
+      s.path = "./scripts/enable_rdp.ps1"
+      s.upload_path = "c:/windows/temp/enable_rdp.ps1"
       s.privileged = true
     end
 

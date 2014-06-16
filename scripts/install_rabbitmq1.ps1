@@ -7,6 +7,7 @@
 
 $erlang_dir = Join-Path -Path $BaseDir -ChildPath "Erlang"
 $rabbit_dir = Join-Path -Path $BaseDir -ChildPath "RabbitMQ"
+$rabbit_config_file = Join-Path -Path $rabbit_dir -ChildPath "rabbitmq.config"
 
 $erlang_download = "http://www.erlang.org/download/otp_win64_$erlang_version.exe"
 $erlang_install = (Join-Path -Path $BaseDir -ChildPath "erlang.exe")
@@ -123,9 +124,10 @@ if (!(Test-Path $rabbit_dir)){
     Write-Host "Setting RABBITMQ_BASE: -->$rabbit_dir"
     Set-EnvironmentVar "RABBITMQ_BASE" $rabbit_dir "Machine"
 
-    $rabbit_config_file = Join-Path -Path $rabbit_dir -ChildPath "rabbitmq.config"
-    Write-Host "Setting RABBITMQ_CONFIG_FILE: -->$rabbit_config_file"
-    Set-EnvironmentVar "RABBITMQ_CONFIG_FILE" $rabbit_config_file "Machine"
+    #https://www.rabbitmq.com/relocate - enviornment var is without the .config extension
+    $rabbit_confile_file_envvar = $rabbit_config_file -Replace ".config",""
+    Write-Host "Setting RABBITMQ_CONFIG_FILE: -->$rabbit_confile_file_envvar"
+    Set-EnvironmentVar "RABBITMQ_CONFIG_FILE" $rabbit_confile_file_envvar "Machine"
 
     Write-Host "Adding sbin folder to PATH: -->$sbin_dir"
     Add-ToPath $sbin_dir "Machine"
@@ -139,3 +141,11 @@ if(!(Get-Command rabbitmq-service -ErrorAction SilentlyContinue)) {
     Write-Error 'Could not find rabbitmq-service command. sbin folder not added to PATH correctly or PATH not refreshed.'
     return
 }
+
+#$ip = (Get-NetIPAddress -AddressFamily IPv4 -InterfaceAlias Ethernet0).IPAddress
+
+#'guest' user can only login via loopback interface by default
+
+$rabbitMQConfig = "[`n  {rabbit, [{loopback_users, []}]}`n]."
+
+Set-Content -Path $rabbit_config_file -Value $rabbitMQConfig
