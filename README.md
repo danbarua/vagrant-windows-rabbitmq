@@ -13,6 +13,11 @@ A Windows Server 2012 box for VirtualBox has been [contributed by OpenTable to V
     $vagrant box add opentable/win-2012r2-standard-amd64-nocm
 ```
 
+Update the Vagrantfile to indicate your box of choice:
+```ruby
+    config.vm.box = "opentable/win-2012r2-standard-amd64-nocm"
+```
+
 Installation
 ------------
 * Requires an Internet Connection!
