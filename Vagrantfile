@@ -21,10 +21,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       s.args = "'c:/tools' '17.0' '3.3.2'" #installdir, erlang version, rabbitmq version
     end
 
-    #powershell "Start-Process -Wait" doesn't seem to play nice with the rabbitmq admin .bat files,
-    #it always blocks and never exits when running over SSH
-    #needed to split this step  out into a .bat file
-
     #install rabbitmq service
     #enable rabbitmq management, federation and shovel plugins
     #start rabbitmq service

@@ -1,3 +1,6 @@
+REM This is the place to configure RabbitMQ Windows Service and plugin configuration
+REM Calling these batch files from Powershell seems to hang the Vagrant shell provisioner
+
 cmd /c rabbitmq-service install
 
 cmd /c rabbitmq-plugins enable rabbitmq_management
