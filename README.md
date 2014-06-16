@@ -17,7 +17,7 @@ Installation
 ------------
 * Requires an Internet Connection!
 * Downloads and Installs Erlang OTP 17.0 to C:\Tools\Erlang
-* DOwnloads and Installs RabbitMQ 3.3.2 to C:\Tools\RabbitMQ
+* Downloads and Installs RabbitMQ 3.3.2 to C:\Tools\RabbitMQ
 * Sets RabbitMQ base directory to C:\Tools\RabbitMQ*
 * Installs plugins
  * rabbitmq_management
